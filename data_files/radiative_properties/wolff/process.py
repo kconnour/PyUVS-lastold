@@ -16,7 +16,6 @@ def process_file(source_filename: str, aerosol: str, version: int) -> None:
     except OSError as ose:
         raise FileExistsError('The source filename exists but is not a valid .fits file.') from ose
 
-    return
     # Open an empty .hdf5 file
     destination_filepath = Path('/media') / 'kyle' / 'iuvs' / 'processed' / 'radiative_properties' / 'wolff' / \
                            f'{aerosol}_v{version:02}.hdf5'
@@ -50,9 +49,8 @@ def process_file(source_filename: str, aerosol: str, version: int) -> None:
     ds = file.create_dataset('asymmetry_parameter', data=radprop.get_asymmetry_parameter())
     ds.attrs['unit'] = 'Unitless'
 
-    # This should work when Mike creates the phase function again
-    #ds = file.create_dataset('phase_function', data=radprop.get_phase_function())
-    #ds.attrs['unit'] = 'Unitless'
+    ds = file.create_dataset('phase_function', data=radprop.get_phase_function())
+    ds.attrs['unit'] = 'Unitless'
 
     ds = file.create_dataset('phase_function_reexpansion', data=radprop.get_phase_function_reexpansion())
     ds.attrs['unit'] = 'Unitless'
@@ -69,5 +67,5 @@ def process_file(source_filename: str, aerosol: str, version: int) -> None:
 
 
 if __name__ == '__main__':
-    process_file('dust1-dust_all.fits.gz', 'dust', 1)
+    process_file('dust1-mars045i_all_area_s0780.fits.gz', 'dust', 1)
     #process_file('ice1-droxtal_050_tmat1_reff_v010.fits', 'ice', 1)

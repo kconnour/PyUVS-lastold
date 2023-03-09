@@ -220,27 +220,5 @@ class RadpropFile:
     def get_history(self) -> str:
         header = self._get_header()
         history = str(header['history'])
+        # The ??? currently only applies to the dust file
         return history.replace('???', '--')
-
-    # These work for dust1 but not ice. I could make Dust and Ice classes that inherit Radprop, but I'm afraid
-    #  these change too frequently to be reliably coded. I need a more stable interface from Mike
-    '''
-    def get_sphericity(self) -> float:
-        header = self._get_header()
-        return header['spheric']
-
-    def get_sphericitiy_comment(self) -> str:
-        header = self._get_header()
-        return header.comments['spheric']
-
-    def get_source_of_refractive_indices(self) -> float:
-        header = self._get_header()
-        return header['diel']
-
-    def get_source_of_refractive_indices_comment(self) -> str:
-        header = self._get_header()
-        return header.comments['diel']
-    '''
-if __name__ == '__main__':
-    hd = fits.open('/media/kyle/iuvs/raw/radiative_properties/wolff/dust1-dust_all.fits.gz')
-    rp = RadpropFile(hd)
