@@ -20,8 +20,8 @@ wolff_x, wolff_y = np.meshgrid(wolff_wavelength_edges, wolff_particle_size_edges
 ames_dust = AmesRadiativeProperties('dust', 1)
 ames_particle_sizes = ames_dust.get_particle_sizes()
 ames_wavelengths = ames_dust.get_wavelengths()
-ames_csca = ames_dust.get_scattering_cross_sections()
-ames_cext = ames_dust.get_extinction_cross_sections()
+ames_csca = (ames_dust.get_scattering_cross_sections().T * np.pi * ames_particle_sizes**2).T
+ames_cext = ames_dust.get_extinction_cross_sections() # (ames_dust.get_extinction_cross_sections().T * np.pi * ames_particle_sizes**2).T
 
 ames_particle_size_edges = np.concatenate(([0.18], (ames_particle_sizes[1:] + ames_particle_sizes[:-1])/2, [1000]))
 ames_wavelength_edges = np.concatenate(([0.06], (ames_wavelengths[1:] + ames_wavelengths[:-1])/2, [64]))
@@ -44,19 +44,19 @@ for i in range(2):
             ax[1, 0].set_ylabel('Particle size [microns]')
             ax[1, 0].set_xlabel('Wavelength [microns]')
         elif i == 1 and j == 1:
-            pcm = ax[1, 1].pcolormesh(ames_x, ames_y, np.log(ames_cext), cmap='plasma', vmin=0, vmax=5)
+            pcm = ax[1, 1].pcolormesh(ames_x, ames_y, ames_cext, cmap='jet', vmin=0, vmax=3.6)
             ax[1, 1].set_title('Log Ames Cext')
         elif i == 1 and j == 2:
             pcm = ax[1, 2].pcolormesh(ames_x, ames_y, ames_csca / ames_cext, cmap='plasma', vmin=0, vmax=1)
             ax[1, 2].set_title('Ames SSA')
 
-        ax[i, j].set_xlim(0, 1)
+        ax[i, j].set_xlim(0, 2)
         ax[i, j].set_ylim(0, 5)
         ax[i, j].set_facecolor('gray')
 
         fig.colorbar(pcm, ax=ax[i, j])
 
-plt.savefig('/media/kyle/iuvs/images/gcm/dust_wolff1_vs_ames1.png', dpi=200)
+plt.savefig('/media/kyle/iuvs/images/gcm/dust_wolff1_vs_ames1-jet.png', dpi=200)
 plt.close(fig)
 
 fig, ax = plt.subplots(2, 3, figsize=(9, 6))
@@ -74,8 +74,8 @@ wolff_x, wolff_y = np.meshgrid(wolff_wavelength_edges, wolff_particle_size_edges
 ames_dust = AmesRadiativeProperties('ice', 1)
 ames_particle_sizes = ames_dust.get_particle_sizes()
 ames_wavelengths = ames_dust.get_wavelengths()
-ames_csca = ames_dust.get_scattering_cross_sections()
-ames_cext = ames_dust.get_extinction_cross_sections()
+ames_csca = (ames_dust.get_scattering_cross_sections().T * np.pi * ames_particle_sizes**2).T
+ames_cext = (ames_dust.get_extinction_cross_sections().T * np.pi * ames_particle_sizes**2).T
 
 ames_particle_size_edges = np.concatenate(([0.18], (ames_particle_sizes[1:] + ames_particle_sizes[:-1])/2, [1000]))
 ames_wavelength_edges = np.concatenate(([0.098], (ames_wavelengths[1:] + ames_wavelengths[:-1])/2, [50.5]))
@@ -110,4 +110,4 @@ for i in range(2):
 
         fig.colorbar(pcm, ax=ax[i, j])
 
-plt.savefig('/home/kyle/iuvs/ice_ames_vs_wolff.png', dpi=200)
+plt.savefig('/media/kyle/iuvs/images/gcm/ice_wolff1_vs_ames1.png', dpi=200)
