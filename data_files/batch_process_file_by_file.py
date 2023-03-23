@@ -36,12 +36,12 @@ if __name__ == '__main__':
                     apoapse.integration.add_opportunity_classification_to_file(file)
 
                     # Add spacecraft geometry datasets
-                    # subsolar latitude
-                    # subsolar longitude
-                    # subspacecraft lat
-                    # subspacecraft lon
-                    # subspacecraft alt
-                    # velocity inertial frame
+                    apoapse.spacecraft_geometry.add_subsolar_latitude_to_file(file, apoapse_hduls)
+                    apoapse.spacecraft_geometry.add_subsolar_longitude_to_file(file, apoapse_hduls)
+                    apoapse.spacecraft_geometry.add_subspacecraft_latitude_to_file(file, apoapse_hduls)
+                    apoapse.spacecraft_geometry.add_subspacecraft_longitude_to_file(file, apoapse_hduls)
+                    apoapse.spacecraft_geometry.add_subspacecraft_altitude_to_file(file, apoapse_hduls)
+                    apoapse.spacecraft_geometry.add_spacecraft_velocity_inertial_frame_to_file(file, apoapse_hduls)
 
                     # Add instrument geometry datasets
                     # x fov
