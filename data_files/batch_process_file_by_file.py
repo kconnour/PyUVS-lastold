@@ -22,9 +22,36 @@ if __name__ == '__main__':
                     apoapse_hduls = get_apoapse_muv_fits_files(orbit, iuvs_fits_file_location)
 
                     # Add apsis datasets
+                    # Many...
 
                     # Add integration datasets
-                    apoapse.integration.ephemeris_time.add_ephemeris_time_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_ephemeris_time_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_mirror_data_number_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_mirror_angle_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_field_of_view_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_case_temperature_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_integration_time_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_swath_number_to_file(file)
+                    apoapse.integration.add_number_of_swaths_to_file(file)
+                    apoapse.integration.add_opportunity_classification_to_file(file)
+
+                    # Add spacecraft geometry datasets
+                    # subsolar latitude
+                    # subsolar longitude
+                    # subspacecraft lat
+                    # subspacecraft lon
+                    # subspacecraft alt
+                    # velocity inertial frame
+
+                    # Add instrument geometry datasets
+                    # x fov
+                    # instrument sun angle
+                    # app flip
+
+                case 'periapse':
+                    # Add apsis datasets
+                    # Many...
+                    pass
 
     for orb in range(3000, 3002):
         print(orb)

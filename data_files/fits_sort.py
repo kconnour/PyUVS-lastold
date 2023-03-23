@@ -4,7 +4,7 @@ from astropy.io import fits
 import numpy as np
 
 import pyuvs as pu
-from data_files.generic.iuvs_fits import get_observation_id, get_mcp_voltage
+from data_files.iuvs_fits import get_observation_id, get_mcp_voltage
 
 
 def _get_segment_orbit_channel_fits_file_paths(iuvs_fits_file_location: Path, segment: str, orbit: int, channel: str) -> list[Path]:
