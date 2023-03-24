@@ -44,9 +44,9 @@ if __name__ == '__main__':
                     apoapse.spacecraft_geometry.add_spacecraft_velocity_inertial_frame_to_file(file, apoapse_hduls)
 
                     # Add instrument geometry datasets
-                    # x fov
-                    # instrument sun angle
-                    # app flip
+                    apoapse.instrument_geometry.add_instrument_x_field_of_view_to_file(file, apoapse_hduls)
+                    apoapse.instrument_geometry.add_instrument_sun_angle_to_file(file, apoapse_hduls)
+                    apoapse.instrument_geometry.add_app_flip_to_file(file)
 
                 case 'periapse':
                     # Add apsis datasets
