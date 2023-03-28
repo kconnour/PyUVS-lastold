@@ -1,15 +1,16 @@
 """This module contains constants relevant to IUVS.
-
-Most of the values here come from the seminal `IUVS paper
-<https://link.springer.com/article/10.1007/s11214-014-0098-7>`_.
 """
 from datetime import datetime
 import numpy as np
 
 
 orbit_insertion_date: datetime = datetime(2014, 9, 22, 2, 24, 0)
-"""Date of MAVEN's orbital insertion
+"""Date of MAVEN's orbital insertion. 
 
+Notes
+-----
+This value comes from `JPL 
+<https://www.jpl.nasa.gov/news/nasas-newest-mars-mission-spacecraft-enters-orbit-around-red-planet>`_.
 """
 
 spatial_slit_thickness: float = 0.1
@@ -17,7 +18,7 @@ spatial_slit_thickness: float = 0.1
 
 Notes
 -----
-This value comes from Table 3 (p. 91) of the IUVS paper. 
+This value comes from Table 3 (p. 91) of the 
 """
 
 spatial_slit_length: float = 19.8
@@ -25,7 +26,8 @@ spatial_slit_length: float = 19.8
 
 Notes
 -----
-This value comes from Table 3 (p. 91) of the IUVS paper. 
+This value comes from Table 3 (p. 91) of the `IUVS paper
+<https://link.springer.com/article/10.1007/s11214-014-0098-7>`_.
 """
 
 telescope_focal_length: float = 99.5
@@ -109,14 +111,10 @@ Notes
 This value is simply an engineering convention and has no physical basis.
 """
 
-latest_hdul_file_version: int = 13
-"""The latest version of the IUVS fits files.
-"""
-
-gravity: float = 3.72076
-"""The gravitational constant on Mars.
-"""
-
 apoapse_muv_failsafe_voltage: float = 497.63803
 """The voltage of the failsafe mode.
+
+Notes
+-----
+This value is simply an engineering convention and has no physical basis.
 """

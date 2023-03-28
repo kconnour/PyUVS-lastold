@@ -1,30 +1,43 @@
 import numpy as np
 
 
-def haversine(target_lat, target_lon, lat_array, lon_array):
-    """
+def haversine(grid: tuple[np.ndarray, np.ndarray], target: tuple[float, float]) -> np.ndarray:
+    """Compute the angular distance between an array of latitude/longitude points and a target point.
 
     Parameters
     ----------
-    target_lat: float
-        The latitude of the target point
-    target_lon: float
-        The longitude of the target point
-    lat_array: np.ndarray
-        The array of latitudes
-    lon_array: np.ndarray
-        The array of longitudes
+    grid
+        The [latitude, longitude] of the grid. The latitude and longitude must have the same shape and are assumed to be
+        in degrees.
+    target
+        The [latitude, longitude] of the target point. Both values are assumed to be in degrees.
 
     Returns
     -------
-    distance: np.ndarray
-        The distance between the point and the grid
-    """
-    # Calculate the angular distance between the target point and the array of coordinates
-    d_lat = np.radians(lat_array - target_lat)
-    d_lon = np.radians(lon_array - target_lon)
+    np.ndarray
+        The angular distance between the point and the grid in degrees.
 
-    # Turn that angular distance into a physical distance
-    a = np.sin(d_lat / 2) ** 2 + np.cos(np.radians(target_lat)) * np.cos(np.radians(lat_array)) * np.sin(d_lon / 2) ** 2
+    Examples
+    --------
+    Get the angle between points on opposite sides of the planet.
+
+    >>> import numpy as np
+    >>> import pyuvs as pu
+    >>> pu.haversine((np.array([0]), np.array([0])), (0, 180))
+    array([180.])
+
+    Get the angle between any point on the equator and the pole.
+
+    >>> pu.haversine((np.array([0]), np.array([34])), (90, 300))
+    array([90.])
+
+    """
+    latitude = np.radians(grid[0])
+    longitude = np.radians(grid[1])
+    target_latitude = np.radians(target[0])
+    target_longitude = np.radians(target[1])
+
+    a = np.sin((latitude - target_latitude) / 2) ** 2 + \
+        np.cos(target_latitude) * np.cos(latitude) * np.sin((longitude - target_longitude) / 2) ** 2
     angle = 2 * np.arcsin(np.sqrt(a))
     return np.degrees(angle)
