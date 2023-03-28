@@ -4,7 +4,6 @@ from astropy.io import fits
 import numpy as np
 
 import pyuvs as pu
-from data_files.iuvs_fits import get_observation_id, get_mcp_voltage
 
 
 def _get_segment_orbit_channel_fits_file_paths(iuvs_fits_file_location: Path, segment: str, orbit: int, channel: str) -> list[Path]:
@@ -25,7 +24,7 @@ def _get_apoapse_fits_files(iuvs_fits_file_location: Path, orbit: int, segment: 
     # Test case: orbit 7857 has outbound file as file index 0 with a strange obs id
     data_file_paths = _get_segment_orbit_channel_fits_file_paths(iuvs_fits_file_location, 'apoapse', orbit, segment)
     hduls = [fits.open(f) for f in data_file_paths]
-    obs_id = [get_observation_id(f) for f in hduls]
+    obs_id = [pu.iuvs_fits.get_observation_id(f) for f in hduls]
     return _remove_files_with_oulier_obs_id(hduls, obs_id)
 
 
@@ -35,7 +34,7 @@ def get_apoapse_muv_fits_files(orbit: int, iuvs_fits_file_location: Path) -> lis
 
 def get_apoapse_muv_failsafe_files(orbit: int, iuvs_fits_file_location: Path) -> list[fits.hdu.hdulist.HDUList]:
     apoapse_hduls = get_apoapse_muv_fits_files(orbit, iuvs_fits_file_location)
-    mcp_voltage = [get_mcp_voltage(f) for f in apoapse_hduls]
+    mcp_voltage = [pu.iuvs_fits.get_mcp_voltage(f) for f in apoapse_hduls]
     failsafe = [np.isclose(f, pu.apoapse_muv_failsafe_voltage) for f in mcp_voltage]
     return [f for c, f in enumerate(apoapse_hduls) if failsafe[c]]
 
@@ -49,6 +48,6 @@ def get_apoapse_muv_dayside_files(orbit: int, iuvs_fits_file_location: Path) -> 
 
 def get_apoapse_muv_nightside_files(orbit: int, iuvs_fits_file_location: Path) -> list[fits.hdu.hdulist.HDUList]:
     apoapse_hduls = get_apoapse_muv_fits_files(orbit, iuvs_fits_file_location)
-    mcp_voltage = [get_mcp_voltage(f) for f in apoapse_hduls]
+    mcp_voltage = [pu.iuvs_fits.get_mcp_voltage(f) for f in apoapse_hduls]
     nightside = [f >= pu.apoapse_muv_day_night_voltage_boundary for f in mcp_voltage]
     return [f for c, f in enumerate(apoapse_hduls) if nightside[c]]

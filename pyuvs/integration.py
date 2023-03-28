@@ -1,40 +1,40 @@
 import warnings
 
-from astropy.io import fits
 import numpy as np
 
 from pyuvs import iuvs_fits
-from pyuvs import minimum_mirror_angle, maximum_mirror_angle
+from pyuvs.constants import minimum_mirror_angle, maximum_mirror_angle
+from pyuvs.hdulist import hdulist
 from pyuvs.miscellaneous import catch_empty_arrays, get_integrations_per_file
 
 
 @catch_empty_arrays
-def make_ephemeris_time(hduls: list[fits.hdu.hdulist.HDUList]) -> np.ndarray:
+def make_ephemeris_time(hduls: hdulist) -> np.ndarray:
     return np.concatenate([iuvs_fits.get_integration_ephemeris_time(f) for f in hduls])
 
 
 @catch_empty_arrays
-def make_mirror_data_number(hduls: list[fits.hdu.hdulist.HDUList]) -> np.ndarray:
+def make_mirror_data_number(hduls: hdulist) -> np.ndarray:
     return np.concatenate([iuvs_fits.get_integration_mirror_data_number(f) for f in hduls])
 
 
 @catch_empty_arrays
-def make_mirror_angle(hduls: list[fits.hdu.hdulist.HDUList]) -> np.ndarray:
+def make_mirror_angle(hduls: hdulist) -> np.ndarray:
     return np.concatenate([iuvs_fits.get_integration_mirror_angle(f) for f in hduls])
 
 
 @catch_empty_arrays
-def make_field_of_view(hduls: list[fits.hdu.hdulist.HDUList]) -> np.ndarray:
+def make_field_of_view(hduls: hdulist) -> np.ndarray:
     return np.concatenate([iuvs_fits.get_integration_field_of_view(f) for f in hduls])
 
 
 @catch_empty_arrays
-def make_case_temperature(hduls: list[fits.hdu.hdulist.HDUList]) -> np.ndarray:
+def make_case_temperature(hduls: hdulist) -> np.ndarray:
     return np.concatenate([iuvs_fits.get_integration_case_temperature(f) for f in hduls])
 
 
 @catch_empty_arrays
-def make_integration_time(hduls: list[fits.hdu.hdulist.HDUList]) -> np.ndarray:
+def make_integration_time(hduls: hdulist) -> np.ndarray:
     integrations_per_file = get_integrations_per_file(hduls)
     integration_time = [iuvs_fits.get_integration_time(f) for f in hduls]
     return np.repeat(integration_time, integrations_per_file)

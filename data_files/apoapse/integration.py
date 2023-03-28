@@ -1,4 +1,3 @@
-from astropy.io import fits
 from h5py import File
 
 from data_files.compression import compression, compression_opts
@@ -8,7 +7,7 @@ import pyuvs as pu
 path = 'apoapse/integration'
 
 
-def add_ephemeris_time_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]) -> None:
+def add_ephemeris_time_to_file(file: File, hduls: pu.hdulist) -> None:
     data = pu.integration.make_ephemeris_time(hduls)
     name = 'ephemeris_time'
     try:
@@ -23,7 +22,7 @@ def add_ephemeris_time_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]
     dataset.attrs['unit'] = pu.units.ephemeris_time
 
 
-def add_mirror_data_number_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]) -> None:
+def add_mirror_data_number_to_file(file: File, hduls: pu.hdulist) -> None:
     data = pu.integration.make_mirror_data_number(hduls)
     name = 'mirror_data_number'
     try:
@@ -38,7 +37,7 @@ def add_mirror_data_number_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUL
     dataset.attrs['unit'] = pu.units.data_number
 
 
-def add_mirror_angle_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]) -> None:
+def add_mirror_angle_to_file(file: File, hduls: pu.hdulist) -> None:
     data = pu.integration.make_mirror_angle(hduls)
     name = 'mirror_angle'
     try:
@@ -53,7 +52,7 @@ def add_mirror_angle_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]) 
     dataset.attrs['unit'] = pu.units.angle
 
 
-def add_field_of_view_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]) -> None:
+def add_field_of_view_to_file(file: File, hduls: pu.hdulist) -> None:
     data = pu.integration.make_field_of_view(hduls)
     name = 'field_of_view'
     try:
@@ -68,7 +67,7 @@ def add_field_of_view_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList])
     dataset.attrs['unit'] = pu.units.angle
 
 
-def add_case_temperature_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]) -> None:
+def add_case_temperature_to_file(file: File, hduls: pu.hdulist) -> None:
     data = pu.integration.make_case_temperature(hduls)
     name = 'case_temperature'
     try:
@@ -83,7 +82,7 @@ def add_case_temperature_to_file(file: File, hduls: list[fits.hdu.hdulist.HDULis
     dataset.attrs['unit'] = pu.units.temperature
 
 
-def add_integration_time_to_file(file: File, hduls: list[fits.hdu.hdulist.HDUList]) -> None:
+def add_integration_time_to_file(file: File, hduls: pu.hdulist) -> None:
     data = pu.integration.make_integration_time(hduls)
     name = 'integration_time'
     try:
