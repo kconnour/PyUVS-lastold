@@ -60,8 +60,6 @@ if __name__ == '__main__':
                     apoapse.instrument_geometry.add_app_flip_to_file(file)
 
                 case 'periapse':
-                    # Add apsis datasets
-                    # Many...
                     pass
 
     for orb in range(3000, 3002):

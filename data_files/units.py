@@ -1,9 +1,12 @@
+"""This module provides unit definitions for use in data file processing.
+"""
+
+
 altitude: str = 'km'
 angle: str = 'Degrees'
 brightness: str = 'kR'
 data_number: str = 'Data number'
 ephemeris_time: str = 'Seconds since J2000'
-instrument_sun_angle: str = 'Degrees'
 integration_time: str = 'Seconds'
 latitude: str = 'Degrees [N]'
 local_time: str = 'Hours'

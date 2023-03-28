@@ -1,3 +1,5 @@
+"""This module has generic functions for computing the angle between points.
+"""
 import numpy as np
 
 

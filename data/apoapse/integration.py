@@ -2,41 +2,40 @@ import warnings
 
 import numpy as np
 
-from pyuvs import iuvs_fits
-from pyuvs.constants import minimum_mirror_angle, maximum_mirror_angle
-from pyuvs.hdulist import hdulist
-from pyuvs.miscellaneous import catch_empty_arrays, get_integrations_per_file
+from data.iuvs_fits import Level1b
+from data.miscellaneous import catch_empty_arrays, get_integrations_per_file
+from pyuvs import minimum_mirror_angle, maximum_mirror_angle
 
 
 @catch_empty_arrays
-def make_ephemeris_time(hduls: hdulist) -> np.ndarray:
-    return np.concatenate([iuvs_fits.get_integration_ephemeris_time(f) for f in hduls])
+def make_ephemeris_time(hduls: list[Level1b]) -> np.ndarray:
+    return np.concatenate([f.get_integration_ephemeris_time() for f in hduls])
 
 
 @catch_empty_arrays
-def make_mirror_data_number(hduls: hdulist) -> np.ndarray:
-    return np.concatenate([iuvs_fits.get_integration_mirror_data_number(f) for f in hduls])
+def make_mirror_data_number(hduls: list[Level1b]) -> np.ndarray:
+    return np.concatenate([f.get_integration_mirror_data_number() for f in hduls])
 
 
 @catch_empty_arrays
-def make_mirror_angle(hduls: hdulist) -> np.ndarray:
-    return np.concatenate([iuvs_fits.get_integration_mirror_angle(f) for f in hduls])
+def make_mirror_angle(hduls: list[Level1b]) -> np.ndarray:
+    return np.concatenate([f.get_integration_mirror_angle() for f in hduls])
 
 
 @catch_empty_arrays
-def make_field_of_view(hduls: hdulist) -> np.ndarray:
-    return np.concatenate([iuvs_fits.get_integration_field_of_view(f) for f in hduls])
+def make_field_of_view(hduls: list[Level1b]) -> np.ndarray:
+    return np.concatenate([f.get_integration_field_of_view() for f in hduls])
 
 
 @catch_empty_arrays
-def make_case_temperature(hduls: hdulist) -> np.ndarray:
-    return np.concatenate([iuvs_fits.get_integration_case_temperature(f) for f in hduls])
+def make_case_temperature(hduls: list[Level1b]) -> np.ndarray:
+    return np.concatenate([f.get_integration_case_temperature() for f in hduls])
 
 
 @catch_empty_arrays
-def make_integration_time(hduls: hdulist) -> np.ndarray:
+def make_integration_time(hduls: list[Level1b]) -> np.ndarray:
     integrations_per_file = get_integrations_per_file(hduls)
-    integration_time = [iuvs_fits.get_integration_time(f) for f in hduls]
+    integration_time = [f.get_integration_time() for f in hduls]
     return np.repeat(integration_time, integrations_per_file)
 
 
@@ -48,6 +47,11 @@ def make_swath_number(orbit: int, mirror_angle: np.ndarray) -> np.ndarray:
     the field of view) from an orbital segment. Omitting some mirror angles
     may result in nonsensical results. Adding additional mirror angles from
     multiple segments or orbits will certainly result in nonsensical results.
+
+    Parameters
+    ----------
+    orbit
+    mirror_angle
 
     Returns
     -------
