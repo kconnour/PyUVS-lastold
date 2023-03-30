@@ -1,6 +1,6 @@
 """This module provides objects for pulling data from the IUVS fits files.
 """
-from astropy.io import fits
+'''from astropy.io import fits
 import numpy as np
 
 
@@ -163,4 +163,4 @@ class Level1b(Level1a):
         return self.hdul['observation'].data['mcp_volt'][0]
 
     def get_mcp_voltage_gain(self) -> float:
-        return self.hdul['observation'].data['mcp_gain'][0]
+        return self.hdul['observation'].data['mcp_gain'][0]'''

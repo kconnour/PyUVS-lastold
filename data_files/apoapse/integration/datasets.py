@@ -2,45 +2,48 @@ import warnings
 
 import numpy as np
 
-from data.iuvs_fits import Level1b
-from data.miscellaneous import catch_empty_arrays, get_integrations_per_file
-from pyuvs import minimum_mirror_angle, maximum_mirror_angle
+from data_files import generic
+import pyuvs as pu
 
 
-@catch_empty_arrays
-def make_ephemeris_time(hduls: list[Level1b]) -> np.ndarray:
-    return np.concatenate([f.get_integration_ephemeris_time() for f in hduls])
+def make_ephemeris_time(hduls: generic.hdulist) -> np.ndarray:
+    return generic.make_ephemeris_time(hduls)
 
 
-@catch_empty_arrays
-def make_mirror_data_number(hduls: list[Level1b]) -> np.ndarray:
-    return np.concatenate([f.get_integration_mirror_data_number() for f in hduls])
+def make_mirror_data_number(hduls: generic.hdulist) -> np.ndarray:
+    return generic.make_mirror_data_number(hduls)
 
 
-@catch_empty_arrays
-def make_mirror_angle(hduls: list[Level1b]) -> np.ndarray:
-    return np.concatenate([f.get_integration_mirror_angle() for f in hduls])
+def make_mirror_angle(hduls: generic.hdulist) -> np.ndarray:
+    return generic.make_mirror_angle(hduls)
 
 
-@catch_empty_arrays
-def make_field_of_view(hduls: list[Level1b]) -> np.ndarray:
-    return np.concatenate([f.get_integration_field_of_view() for f in hduls])
+def make_field_of_view(hduls: generic.hdulist) -> np.ndarray:
+    return generic.make_field_of_view(hduls)
 
 
-@catch_empty_arrays
-def make_case_temperature(hduls: list[Level1b]) -> np.ndarray:
-    return np.concatenate([f.get_integration_case_temperature() for f in hduls])
+def make_case_temperature(hduls: generic.hdulist) -> np.ndarray:
+    return generic.make_case_temperature(hduls)
 
 
-@catch_empty_arrays
-def make_integration_time(hduls: list[Level1b]) -> np.ndarray:
-    integrations_per_file = get_integrations_per_file(hduls)
-    integration_time = [f.get_integration_time() for f in hduls]
-    return np.repeat(integration_time, integrations_per_file)
+def make_integration_time(hduls: generic.hdulist) -> np.ndarray:
+    return generic.make_integration_time(hduls)
+
+
+def make_swath_number(orbit: int, hduls: generic.hdulist) -> np.ndarray:
+    mirror_angle = make_mirror_angle(hduls)
+    swath_number = compute_swath_number(mirror_angle)
+
+    if orbit in []:
+        swath_number += 1
+    elif orbit in [3965]:
+        swath_number += 4
+
+    return swath_number
 
 
 # TODO: This doesn't account for times when there was a single swath missing in the middle, as with once in Jan 2023 data
-def make_swath_number(orbit: int, mirror_angle: np.ndarray) -> np.ndarray:
+def compute_swath_number(mirror_angle: np.ndarray) -> np.ndarray:
     """Make the swath number associated with each mirror angle.
 
     This function assumes the input is all the mirror angles (or, equivalently,
@@ -50,7 +53,6 @@ def make_swath_number(orbit: int, mirror_angle: np.ndarray) -> np.ndarray:
 
     Parameters
     ----------
-    orbit
     mirror_angle
 
     Returns
@@ -80,14 +82,11 @@ def make_swath_number(orbit: int, mirror_angle: np.ndarray) -> np.ndarray:
         else:
             swath_number = np.zeros(mirror_angle.shape)
 
-    if orbit in []:
-        swath_number += 1
-    elif orbit in [3965]:
-        swath_number += 4
     return swath_number
 
 
-def make_number_of_swaths(orbit: int, swath_number: np.ndarray) -> np.ndarray:
+def make_number_of_swaths(orbit: int, hduls: generic.hdulist) -> np.ndarray:
+    swath_number = make_swath_number(orbit, hduls)
     number_of_swaths = np.array([swath_number[-1] + 1]) if swath_number.size > 0 else np.array([])
     if orbit in [3115, 3174, 3211, 3229, 3248, 3375, 3488, 3688, 3692]:
         number_of_swaths += 1
@@ -98,10 +97,16 @@ def make_number_of_swaths(orbit: int, swath_number: np.ndarray) -> np.ndarray:
     return number_of_swaths
 
 
-def make_opportunity_classification(mirror_angle: np.ndarray, swath_number: np.ndarray) -> np.ndarray:
+def make_opportunity_classification(orbit: int, hduls: generic.hdulist) -> np.ndarray:
+    mirror_angle = make_mirror_angle(hduls)
+    swath_number = make_swath_number(orbit, hduls)
+    return compute_opportunity_classification(mirror_angle, swath_number)
+
+
+def compute_opportunity_classification(mirror_angle: np.ndarray, swath_number: np.ndarray) -> np.ndarray:
     opportunity_integrations = np.empty(swath_number.shape, dtype='bool')
     for sn in np.unique(swath_number):
         angles = mirror_angle[swath_number == sn]
-        relay = minimum_mirror_angle in angles and maximum_mirror_angle in angles
+        relay = pu.minimum_mirror_angle in angles and pu.maximum_mirror_angle in angles
         opportunity_integrations[swath_number == sn] = relay
     return opportunity_integrations

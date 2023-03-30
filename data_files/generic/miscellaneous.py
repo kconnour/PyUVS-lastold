@@ -2,8 +2,7 @@
 """
 from astropy.io import fits
 import numpy as np
-
-from data.iuvs_fits import Level1a
+from data_files.generic.typing import hdulist
 
 
 def catch_empty_arrays(func: callable):
@@ -45,6 +44,6 @@ def add_leading_axis_if_necessary(data: list[np.ndarray], expected_axes: int) ->
     return [f if np.ndim(f) == expected_axes else f[None, :] for f in data if f.size > 0]
 
 
-def get_integrations_per_file(hduls: list[Level1a]) -> list[int]:
-    et = [f.get_integration_ephemeris_time() for f in hduls]
+def get_integrations_per_file(hduls: hdulist) -> list[int]:
+    et = [f['integration'].data['et'] for f in hduls]
     return [f.shape[0] for f in et]

@@ -42,12 +42,12 @@ if __name__ == '__main__':
                     apoapse.integration.add_field_of_view_to_file(file, apoapse_hduls)
                     apoapse.integration.add_case_temperature_to_file(file, apoapse_hduls)
                     apoapse.integration.add_integration_time_to_file(file, apoapse_hduls)
-                    apoapse.integration.add_swath_number_to_file(file)
-                    apoapse.integration.add_number_of_swaths_to_file(file)
-                    apoapse.integration.add_opportunity_classification_to_file(file)
+                    apoapse.integration.add_swath_number_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_number_of_swaths_to_file(file, apoapse_hduls)
+                    apoapse.integration.add_opportunity_classification_to_file(file, apoapse_hduls)
 
                     # Add spacecraft geometry datasets
-                    apoapse.spacecraft_geometry.add_subsolar_latitude_to_file(file, apoapse_hduls)
+                    '''apoapse.spacecraft_geometry.add_subsolar_latitude_to_file(file, apoapse_hduls)
                     apoapse.spacecraft_geometry.add_subsolar_longitude_to_file(file, apoapse_hduls)
                     apoapse.spacecraft_geometry.add_subspacecraft_latitude_to_file(file, apoapse_hduls)
                     apoapse.spacecraft_geometry.add_subspacecraft_longitude_to_file(file, apoapse_hduls)
@@ -57,11 +57,11 @@ if __name__ == '__main__':
                     # Add instrument geometry datasets
                     apoapse.instrument_geometry.add_instrument_x_field_of_view_to_file(file, apoapse_hduls)
                     apoapse.instrument_geometry.add_instrument_sun_angle_to_file(file, apoapse_hduls)
-                    apoapse.instrument_geometry.add_app_flip_to_file(file)
+                    apoapse.instrument_geometry.add_app_flip_to_file(file)'''
 
                 case 'periapse':
                     pass
 
-    for orb in range(3000, 3002):
+    for orb in range(3003, 3005):
         print(orb)
         batch_process_orbit(orb)
