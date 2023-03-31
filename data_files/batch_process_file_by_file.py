@@ -47,7 +47,7 @@ if __name__ == '__main__':
                     apoapse.integration.add_opportunity_classification_to_file(file, apoapse_hduls)
 
                     # Add spacecraft geometry datasets
-                    '''apoapse.spacecraft_geometry.add_subsolar_latitude_to_file(file, apoapse_hduls)
+                    apoapse.spacecraft_geometry.add_subsolar_latitude_to_file(file, apoapse_hduls)
                     apoapse.spacecraft_geometry.add_subsolar_longitude_to_file(file, apoapse_hduls)
                     apoapse.spacecraft_geometry.add_subspacecraft_latitude_to_file(file, apoapse_hduls)
                     apoapse.spacecraft_geometry.add_subspacecraft_longitude_to_file(file, apoapse_hduls)
@@ -57,11 +57,24 @@ if __name__ == '__main__':
                     # Add instrument geometry datasets
                     apoapse.instrument_geometry.add_instrument_x_field_of_view_to_file(file, apoapse_hduls)
                     apoapse.instrument_geometry.add_instrument_sun_angle_to_file(file, apoapse_hduls)
-                    apoapse.instrument_geometry.add_app_flip_to_file(file)'''
+                    apoapse.instrument_geometry.add_app_flip_to_file(file, apoapse_hduls)
+
+                    for channel in ['muv']:
+                        match channel:
+                            case 'muv':
+                                muv_hduls = get_apoapse_muv_fits_files(orbit, iuvs_fits_file_location)
+
+                                # Add MUV integration datasets
+                                apoapse.muv.integration.add_detector_temperature_to_file(file, muv_hduls)
+                                apoapse.muv.integration.add_mcp_voltage_to_file(file, muv_hduls)
+                                apoapse.muv.integration.add_mcp_voltage_gain_to_file(file, muv_hduls)
+                                apoapse.muv.integration.add_failsafe_integrations_to_file(file, muv_hduls)
+                                apoapse.muv.integration.add_dayside_integrations_to_file(file, muv_hduls)
+                                apoapse.muv.integration.add_nightside_integrations_to_file(file, muv_hduls)
 
                 case 'periapse':
                     pass
 
-    for orb in range(3003, 3005):
+    for orb in range(3000, 3005):
         print(orb)
         batch_process_orbit(orb)

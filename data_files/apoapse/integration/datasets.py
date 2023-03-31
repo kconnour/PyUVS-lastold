@@ -42,7 +42,7 @@ def make_swath_number(orbit: int, hduls: generic.hdulist) -> np.ndarray:
     return swath_number
 
 
-# TODO: This doesn't account for times when there was a single swath missing in the middle, as with once in Jan 2023 data
+# TODO: This doesn't account for times when there was a single swath missing in the middle, as with orbit 18150
 def compute_swath_number(mirror_angle: np.ndarray) -> np.ndarray:
     """Make the swath number associated with each mirror angle.
 

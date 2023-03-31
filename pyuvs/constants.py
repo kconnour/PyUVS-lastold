@@ -18,7 +18,8 @@ spatial_slit_thickness: float = 0.1
 
 Notes
 -----
-This value comes from Table 3 (p. 91) of the 
+This value comes from Table 3 (p. 91) of the `IUVS paper
+<https://link.springer.com/article/10.1007/s11214-014-0098-7>`_.
 """
 
 spatial_slit_length: float = 19.8

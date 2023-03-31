@@ -1,24 +1,7 @@
 """This module contains functions I don't have another place for.
 """
-from astropy.io import fits
 import numpy as np
 from data_files.generic.typing import hdulist
-
-
-def catch_empty_arrays(func: callable):
-    """Return an empty array if an empty list is passed to a function. This is only designed for use as a decorator.
-
-    Parameters
-    ----------
-    func
-
-    Returns
-    -------
-
-    """
-    def wrapper(hduls: list[fits.hdu.hdulist.HDUList], *args):
-        return func(hduls, *args) if hduls else np.array([])
-    return wrapper
 
 
 def add_leading_axis_if_necessary(data: list[np.ndarray], expected_axes: int) -> list[np.ndarray]:
@@ -45,5 +28,4 @@ def add_leading_axis_if_necessary(data: list[np.ndarray], expected_axes: int) ->
 
 
 def get_integrations_per_file(hduls: hdulist) -> list[int]:
-    et = [f['integration'].data['et'] for f in hduls]
-    return [f.shape[0] for f in et]
+    return [f['integration'].data['et'].shape[0] for f in hduls]
