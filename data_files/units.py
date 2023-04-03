@@ -4,6 +4,7 @@
 
 altitude: str = 'km'
 angle: str = 'Degrees'
+bin: str = 'Bin'
 brightness: str = 'kR'
 data_number: str = 'Data number'
 ephemeris_time: str = 'Seconds since J2000'

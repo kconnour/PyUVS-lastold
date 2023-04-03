@@ -1,3 +1,4 @@
+from .binning import *
 from .instrument_geometry import *
 from .integration import *
 from .miscellaneous import *
