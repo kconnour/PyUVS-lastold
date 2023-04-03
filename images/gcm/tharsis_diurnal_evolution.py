@@ -79,7 +79,7 @@ if __name__ == '__main__':
         fig.suptitle(f'PCM UV ice optical depth (MY{pcm_mars_year}, sol 366)')
 
         for lt in range(24):
-            pcm = ax[lt // 6, lt % 6].pcolormesh(pcm_x, pcm_y, pcm_ice[367, (lt+8) % 24], cmap='viridis', vmin=ice_vmin, vmax=ice_vmax)
+            pcm = ax[lt // 6, lt % 6].pcolormesh(pcm_x, pcm_y, pcm_ice[366, (lt+8) % 24], cmap='viridis', vmin=ice_vmin, vmax=ice_vmax)
             ax[lt // 6, lt % 6].set_xlim(lon_min, lon_max)
             ax[lt // 6, lt % 6].set_ylim(lat_min, lat_max)
             ax[lt // 6, lt % 6].set_xticks([])

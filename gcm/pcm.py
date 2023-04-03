@@ -38,7 +38,7 @@ class PlanetaryClimateModelSimulation(AbstractSimulation):
         return location
 
     def _load_monthly_datasets(self):
-        files = self._location.glob('diagfi*.nc')
+        files = sorted(self._location.glob('diagfi*.nc'))
         return [Dataset(f) for f in files]
 
     def get_latitude_centers(self):
