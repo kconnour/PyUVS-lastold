@@ -81,8 +81,8 @@ if __name__ == '__main__':
                                             # Add binning datasets
                                             apoapse.muv.failsafe.binning.add_spatial_bin_edges_to_file(file, failsafe_hduls)
                                             apoapse.muv.failsafe.binning.add_spectral_bin_edges_to_file(file, failsafe_hduls)
-                                            apoapse.muv.failsafe.binning.add_spatial_bin_size_to_file(file, failsafe_hduls)
-                                            apoapse.muv.failsafe.binning.add_spectral_bin_size_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.binning.add_spatial_bin_width_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.binning.add_spectral_bin_width_to_file(file, failsafe_hduls)
 
                                             # Add spatial bin geometry datasets
                                             apoapse.muv.failsafe.spatial_bin_geometry.add_latitude_to_file(file, failsafe_hduls)
@@ -99,14 +99,19 @@ if __name__ == '__main__':
                                             apoapse.muv.failsafe.spatial_bin_geometry.add_declination_to_file(file, failsafe_hduls)
                                             apoapse.muv.failsafe.spatial_bin_geometry.add_bin_vector_to_file(file, failsafe_hduls)
 
+                                            # Add detector datasets
+                                            apoapse.muv.failsafe.detector.add_raw_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.detector.add_dark_subtracted_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.detector.add_brightness_to_file(file)
+
                                         case 'dayside':
                                             dayside_hduls = get_apoapse_muv_dayside_files(orbit, iuvs_fits_file_location)
 
                                             # Add binning datasets
                                             apoapse.muv.dayside.binning.add_spatial_bin_edges_to_file(file, dayside_hduls)
                                             apoapse.muv.dayside.binning.add_spectral_bin_edges_to_file(file, dayside_hduls)
-                                            apoapse.muv.dayside.binning.add_spatial_bin_size_to_file(file, dayside_hduls)
-                                            apoapse.muv.dayside.binning.add_spectral_bin_size_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.binning.add_spatial_bin_width_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.binning.add_spectral_bin_width_to_file(file, dayside_hduls)
 
                                             # Add spatial bin geometry datasets
                                             apoapse.muv.dayside.spatial_bin_geometry.add_latitude_to_file(file, dayside_hduls)
@@ -123,14 +128,19 @@ if __name__ == '__main__':
                                             apoapse.muv.dayside.spatial_bin_geometry.add_declination_to_file(file, dayside_hduls)
                                             apoapse.muv.dayside.spatial_bin_geometry.add_bin_vector_to_file(file, dayside_hduls)
 
+                                            # Add detector datasets
+                                            apoapse.muv.dayside.detector.add_raw_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.detector.add_dark_subtracted_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.detector.add_brightness_to_file(file)
+
                                         case 'nightside':
                                             nightside_hduls = get_apoapse_muv_nightside_files(orbit, iuvs_fits_file_location)
 
                                             # Add binning datasets
                                             apoapse.muv.nightside.binning.add_spatial_bin_edges_to_file(file, nightside_hduls)
                                             apoapse.muv.nightside.binning.add_spectral_bin_edges_to_file(file, nightside_hduls)
-                                            apoapse.muv.nightside.binning.add_spatial_bin_size_to_file(file, nightside_hduls)
-                                            apoapse.muv.nightside.binning.add_spectral_bin_size_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.binning.add_spatial_bin_width_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.binning.add_spectral_bin_width_to_file(file, nightside_hduls)
 
                                             # Add spatial bin geometry datasets
                                             apoapse.muv.nightside.spatial_bin_geometry.add_latitude_to_file(file, nightside_hduls)
@@ -147,9 +157,14 @@ if __name__ == '__main__':
                                             apoapse.muv.nightside.spatial_bin_geometry.add_declination_to_file(file, nightside_hduls)
                                             apoapse.muv.nightside.spatial_bin_geometry.add_bin_vector_to_file(file, nightside_hduls)
 
+                                            # Add detector datasets
+                                            apoapse.muv.nightside.detector.add_raw_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.detector.add_dark_subtracted_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.detector.add_brightness_to_file(file)
+
                 case 'periapse':
                     pass
 
-    for orb in range(3000, 3004):
+    for orb in range(7693, 10000):
         print(orb)
         batch_process_orbit(orb)

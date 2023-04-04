@@ -1,4 +1,5 @@
 from .binning import *
+from .detector import *
 from .instrument_geometry import *
 from .integration import *
 from .miscellaneous import *

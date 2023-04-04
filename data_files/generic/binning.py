@@ -23,21 +23,21 @@ def make_spectral_bin_edges(hduls: hdulist) -> np.ndarray:
     return np.append(spectral_pixel_low[0], spectral_pixel_high[0, -1] + 1)
 
 
-def make_spatial_bin_size(hduls: hdulist) -> np.ndarray:
+def make_spatial_bin_width(hduls: hdulist) -> np.ndarray:
     if not hduls:
         return np.array([])
     bin_size = np.array([f['primary'].header['spa_size'] for f in hduls])
     if not np.all(bin_size == bin_size[0]):
-        raise ValueError('The spatial bin size is not the same.')
+        raise ValueError('The spatial bin width is not the same.')
     return np.array([bin_size[0]])
 
 
-def make_spectral_bin_size(hduls: hdulist) -> np.ndarray:
+def make_spectral_bin_width(hduls: hdulist) -> np.ndarray:
     if not hduls:
         return np.array([])
     bin_size = np.array([f['primary'].header['spe_size'] for f in hduls])
     if not np.all(bin_size == bin_size[0]):
-        raise ValueError('The spectral bin size is not the same.')
+        raise ValueError('The spectral bin width is not the same.')
     return np.array([bin_size[0]])
 
 

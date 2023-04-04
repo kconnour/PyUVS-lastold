@@ -1,7 +1,6 @@
-"""This module contains functions I don't have another place for.
-"""
+from astropy.io import fits
+from pathlib import Path
 import numpy as np
-from data_files.generic.typing import hdulist
 
 
 def add_leading_axis_if_necessary(data: np.ndarray, expected_axes: int) -> list[np.ndarray]:
@@ -27,5 +26,16 @@ def add_leading_axis_if_necessary(data: np.ndarray, expected_axes: int) -> list[
     return data if np.ndim(data) == expected_axes else data[None, :]
 
 
-def get_integrations_per_file(hduls: hdulist) -> list[int]:
-    return [f['integration'].data['et'].shape[0] for f in hduls]
+p = Path('/media/kyle/iuvs/production/orbit03000')
+files = sorted(p.glob('*apoapse*orbit03000*muv*.gz'))
+hduls = [fits.open(f) for f in files]
+
+for h in hduls:
+    print(h['primary'].shape)
+    print(add_leading_axis_if_necessary(h['primary'].data, 3).shape)
+    print('~'*30)
+'''for file in files:
+    hdul = fits.open(file)
+    print(hdul['primary'].data.shape)
+    foo = add_leading_axis_if_necessary(hdul['primary'].data, 3)
+    print(foo[0].shape)'''

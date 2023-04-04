@@ -41,10 +41,10 @@ def add_spectral_bin_edges_to_file(file: File, hduls: generic.hdulist) -> None:
     dataset.attrs['unit'] = units.bin
 
 
-def add_spatial_bin_size_to_file(file: File, hduls: generic.hdulist) -> None:
-    data = apoapse.muv.nightside.binning.make_spatial_bin_size(hduls)
+def add_spatial_bin_width_to_file(file: File, hduls: generic.hdulist) -> None:
+    data = apoapse.muv.nightside.binning.make_spatial_bin_width(hduls)
 
-    name = 'spatial_bin_size'
+    name = 'spatial_bin_width'
     try:
         dataset = file[path].create_dataset(
             name,
@@ -57,10 +57,10 @@ def add_spatial_bin_size_to_file(file: File, hduls: generic.hdulist) -> None:
     dataset.attrs['unit'] = units.bin
 
 
-def add_spectral_bin_size_to_file(file: File, hduls: generic.hdulist) -> None:
-    data = apoapse.muv.nightside.binning.make_spectral_bin_size(hduls)
+def add_spectral_bin_width_to_file(file: File, hduls: generic.hdulist) -> None:
+    data = apoapse.muv.nightside.binning.make_spectral_bin_width(hduls)
 
-    name = 'spectral_bin_size'
+    name = 'spectral_bin_width'
     try:
         dataset = file[path].create_dataset(
             name,

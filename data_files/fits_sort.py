@@ -45,9 +45,10 @@ def get_apoapse_muv_failsafe_files(orbit: int, iuvs_fits_file_location: Path) ->
 
 def get_apoapse_muv_dayside_files(orbit: int, iuvs_fits_file_location: Path) -> hdulist:
     apoapse_hduls = get_apoapse_muv_fits_files(orbit, iuvs_fits_file_location)
-    apoapse_failsafe_hduls = get_apoapse_muv_failsafe_files(orbit, iuvs_fits_file_location)
-    apoapse_nightside_hduls = get_apoapse_muv_nightside_files(orbit, iuvs_fits_file_location)
-    return [f for f in apoapse_hduls if f not in apoapse_failsafe_hduls and f not in apoapse_nightside_hduls]
+    mcp_voltage = [f['observation'].data['mcp_volt'][0] for f in apoapse_hduls]
+    failsafe = [np.isclose(f, pu.apoapse_muv_failsafe_voltage) for f in mcp_voltage]
+    nightside = [f >= pu.apoapse_muv_day_night_voltage_boundary for f in mcp_voltage]
+    return [f for c, f in enumerate(apoapse_hduls) if not failsafe[c] and not nightside[c]]
 
 
 def get_apoapse_muv_nightside_files(orbit: int, iuvs_fits_file_location: Path) -> hdulist:
