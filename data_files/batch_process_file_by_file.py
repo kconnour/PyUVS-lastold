@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import apoapse
+import periapse
 from data_files.file_structure import setup_file
 from data_files.file_setup import open_latest_file
 from data_files.fits_sort import get_apoapse_muv_fits_files, get_apoapse_muv_failsafe_files, \
@@ -163,7 +164,20 @@ if __name__ == '__main__':
                                             apoapse.muv.nightside.detector.add_brightness_to_file(file)
 
                 case 'periapse':
-                    pass
+
+                    # Add apsis datasets
+                    periapse.apsis.add_ephemeris_time_to_file(file)
+                    periapse.apsis.add_mars_year_to_file(file)
+                    periapse.apsis.add_sol_to_file(file)
+                    periapse.apsis.add_solar_longitude_to_file(file)
+                    periapse.apsis.add_subsolar_latitude_to_file(file)
+                    periapse.apsis.add_subsolar_longitude_to_file(file)
+                    periapse.apsis.add_subspacecraft_latitude_to_file(file)
+                    periapse.apsis.add_subspacecraft_longitude_to_file(file)
+                    periapse.apsis.add_subspacecraft_altitude_to_file(file)
+                    periapse.apsis.add_subspacecraft_local_time_to_file(file)
+                    periapse.apsis.add_mars_sun_distance_to_file(file)
+                    periapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)
 
     for orb in range(7693, 10000):
         print(orb)
