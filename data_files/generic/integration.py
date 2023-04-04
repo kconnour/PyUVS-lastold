@@ -1,7 +1,7 @@
 import numpy as np
 
 from data_files.generic.miscellaneous import get_integrations_per_file
-from data_files.generic.typing import hdulist
+from data_files.generic.hdulist import hdulist
 
 
 def make_ephemeris_time(hduls: hdulist) -> np.ndarray:

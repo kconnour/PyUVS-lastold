@@ -22,8 +22,8 @@ if __name__ == '__main__':
                     # Get some data to work with. For FUV/MUV independent data, just choose either channel
                     apoapse_hduls = get_apoapse_muv_fits_files(orbit, iuvs_fits_file_location)
 
-                    # Add apsis datasets (12 total)
-                    '''apoapse.apsis.add_apsis_ephemeris_time_to_file(file)
+                    # Add apsis datasets
+                    apoapse.apsis.add_ephemeris_time_to_file(file)
                     apoapse.apsis.add_mars_year_to_file(file)
                     apoapse.apsis.add_sol_to_file(file)
                     apoapse.apsis.add_solar_longitude_to_file(file)
@@ -33,8 +33,8 @@ if __name__ == '__main__':
                     apoapse.apsis.add_subspacecraft_longitude_to_file(file)
                     apoapse.apsis.add_subspacecraft_altitude_to_file(file)
                     apoapse.apsis.add_subspacecraft_local_time_to_file(file)
-                    apoapse.apsis.add_mars_sun_distance_to_file(file)'''
-                    #apoapse.apsis.add_subspacecraft_altitude_to_file(file)
+                    apoapse.apsis.add_mars_sun_distance_to_file(file)
+                    apoapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)
 
                     # Add integration datasets
                     apoapse.integration.add_ephemeris_time_to_file(file, apoapse_hduls)

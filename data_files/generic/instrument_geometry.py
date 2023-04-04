@@ -1,7 +1,7 @@
 import numpy as np
 
 from data_files.generic.spacecraft_geometry import make_spacecraft_velocity_inertial_frame
-from data_files.generic.typing import hdulist
+from data_files.generic.hdulist import hdulist
 
 
 def make_instrument_x_field_of_view(hduls: hdulist) -> np.ndarray:

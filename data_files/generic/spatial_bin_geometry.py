@@ -1,6 +1,6 @@
 import numpy as np
 
-from data_files.generic.typing import hdulist
+from data_files.generic.hdulist import hdulist
 from data_files.generic.miscellaneous import add_leading_axis_if_necessary
 
 

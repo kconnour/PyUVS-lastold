@@ -1,7 +1,7 @@
 """This module contains functions I don't have another place for.
 """
 import numpy as np
-from data_files.generic.typing import hdulist
+from data_files.generic.hdulist import hdulist
 
 
 def add_leading_axis_if_necessary(data: np.ndarray, expected_axes: int) -> list[np.ndarray]:

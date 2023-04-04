@@ -1,6 +1,6 @@
 import numpy as np
 
-from data_files.generic.typing import hdulist
+from data_files.generic.hdulist import hdulist
 
 
 def make_spatial_bin_edges(hduls: hdulist) -> np.ndarray:

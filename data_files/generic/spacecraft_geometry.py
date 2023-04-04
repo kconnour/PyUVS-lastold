@@ -1,6 +1,6 @@
 import numpy as np
 
-from data_files.generic.typing import hdulist
+from data_files.generic.hdulist import hdulist
 
 
 def make_subsolar_latitude(hduls: hdulist) -> np.ndarray:
