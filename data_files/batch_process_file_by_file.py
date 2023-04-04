@@ -84,6 +84,21 @@ if __name__ == '__main__':
                                             apoapse.muv.failsafe.binning.add_spatial_bin_size_to_file(file, failsafe_hduls)
                                             apoapse.muv.failsafe.binning.add_spectral_bin_size_to_file(file, failsafe_hduls)
 
+                                            # Add spatial bin geometry datasets
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_latitude_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_longitude_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_tangent_altitude_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_tangent_altitude_rate_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_line_of_sight_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_solar_zenith_angle_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_emission_angle_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_phase_angle_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_zenith_angle_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_local_time_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_right_ascension_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_declination_to_file(file, failsafe_hduls)
+                                            apoapse.muv.failsafe.spatial_bin_geometry.add_bin_vector_to_file(file, failsafe_hduls)
+
                                         case 'dayside':
                                             dayside_hduls = get_apoapse_muv_dayside_files(orbit, iuvs_fits_file_location)
 
@@ -92,6 +107,21 @@ if __name__ == '__main__':
                                             apoapse.muv.dayside.binning.add_spectral_bin_edges_to_file(file, dayside_hduls)
                                             apoapse.muv.dayside.binning.add_spatial_bin_size_to_file(file, dayside_hduls)
                                             apoapse.muv.dayside.binning.add_spectral_bin_size_to_file(file, dayside_hduls)
+
+                                            # Add spatial bin geometry datasets
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_latitude_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_longitude_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_tangent_altitude_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_tangent_altitude_rate_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_line_of_sight_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_solar_zenith_angle_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_emission_angle_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_phase_angle_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_zenith_angle_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_local_time_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_right_ascension_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_declination_to_file(file, dayside_hduls)
+                                            apoapse.muv.dayside.spatial_bin_geometry.add_bin_vector_to_file(file, dayside_hduls)
 
                                         case 'nightside':
                                             nightside_hduls = get_apoapse_muv_nightside_files(orbit, iuvs_fits_file_location)
@@ -102,9 +132,24 @@ if __name__ == '__main__':
                                             apoapse.muv.nightside.binning.add_spatial_bin_size_to_file(file, nightside_hduls)
                                             apoapse.muv.nightside.binning.add_spectral_bin_size_to_file(file, nightside_hduls)
 
+                                            # Add spatial bin geometry datasets
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_latitude_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_longitude_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_tangent_altitude_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_tangent_altitude_rate_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_line_of_sight_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_solar_zenith_angle_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_emission_angle_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_phase_angle_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_zenith_angle_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_local_time_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_right_ascension_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_declination_to_file(file, nightside_hduls)
+                                            apoapse.muv.nightside.spatial_bin_geometry.add_bin_vector_to_file(file, nightside_hduls)
+
                 case 'periapse':
                     pass
 
-    for orb in range(3000, 3005):
+    for orb in range(3000, 3004):
         print(orb)
         batch_process_orbit(orb)

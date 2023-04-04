@@ -10,7 +10,7 @@ path = 'apoapse/muv/nightside/binning'
 
 
 def add_spatial_bin_edges_to_file(file: File, hduls: generic.hdulist) -> None:
-    data = apoapse.muv.failsafe.binning.make_spatial_bin_edges(hduls)
+    data = apoapse.muv.nightside.binning.make_spatial_bin_edges(hduls)
 
     name = 'spatial_bin_edges'
     try:
@@ -26,7 +26,7 @@ def add_spatial_bin_edges_to_file(file: File, hduls: generic.hdulist) -> None:
 
 
 def add_spectral_bin_edges_to_file(file: File, hduls: generic.hdulist) -> None:
-    data = apoapse.muv.failsafe.binning.make_spectral_bin_edges(hduls)
+    data = apoapse.muv.nightside.binning.make_spectral_bin_edges(hduls)
 
     name = 'spectral_bin_edges'
     try:
@@ -42,7 +42,7 @@ def add_spectral_bin_edges_to_file(file: File, hduls: generic.hdulist) -> None:
 
 
 def add_spatial_bin_size_to_file(file: File, hduls: generic.hdulist) -> None:
-    data = apoapse.muv.failsafe.binning.make_spatial_bin_size(hduls)
+    data = apoapse.muv.nightside.binning.make_spatial_bin_size(hduls)
 
     name = 'spatial_bin_size'
     try:
@@ -58,7 +58,7 @@ def add_spatial_bin_size_to_file(file: File, hduls: generic.hdulist) -> None:
 
 
 def add_spectral_bin_size_to_file(file: File, hduls: generic.hdulist) -> None:
-    data = apoapse.muv.failsafe.binning.make_spectral_bin_size(hduls)
+    data = apoapse.muv.nightside.binning.make_spectral_bin_size(hduls)
 
     name = 'spectral_bin_size'
     try:
