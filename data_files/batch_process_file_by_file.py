@@ -163,6 +163,9 @@ if __name__ == '__main__':
                                             apoapse.muv.nightside.detector.add_dark_subtracted_to_file(file, nightside_hduls)
                                             apoapse.muv.nightside.detector.add_brightness_to_file(file)
 
+                    # Add pixel geometry datasets
+                    #apoapse.pixel_geometry.add_latitude_and_longitude_to_file(file)  # these are only done from orbit 3000--3045
+
                 case 'periapse':
 
                     # Add apsis datasets
@@ -179,6 +182,6 @@ if __name__ == '__main__':
                     periapse.apsis.add_mars_sun_distance_to_file(file)
                     periapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)
 
-    for orb in range(7693, 10000):
+    for orb in range(8679, 17599):
         print(orb)
         batch_process_orbit(orb)
