@@ -88,12 +88,12 @@ def compute_swath_number(mirror_angle: np.ndarray) -> np.ndarray:
 def make_number_of_swaths(orbit: int, hduls: generic.hdulist) -> np.ndarray:
     swath_number = make_swath_number(orbit, hduls)
     number_of_swaths = np.array([swath_number[-1] + 1]) if swath_number.size > 0 else np.array([])
-    if orbit in [3115, 3174, 3211, 3229, 3248, 3375, 3488, 3688, 3692]:
+    if orbit in [3115, 3174, 3211, 3229, 3248, 3375, 3488, 4049, 4122, 4141, 4231, 4780, 6525]:
         number_of_swaths += 1
-    elif orbit in [3456, 3581]:
+    elif orbit in [3456, 3581, 3721, 6971, 7241]:
         number_of_swaths += 2
-    elif orbit in [3721]:
-        number_of_swaths += 3
+    elif orbit in [7430, 7802, 7876, 8530]:
+        number_of_swaths += 4
     return number_of_swaths
 
 

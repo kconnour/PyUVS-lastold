@@ -16,8 +16,8 @@ def make_app_flip(hduls: hdulist) -> np.ndarray:
     x_field_of_view = make_instrument_x_field_of_view(hduls)
     spacecraft_velocity_inertial_frame = make_spacecraft_velocity_inertial_frame(hduls)
     try:
-        dot = x_field_of_view[:, 0] * spacecraft_velocity_inertial_frame[:, 0]
-        app_flip = np.array([np.sum(dot) > 1])  # Orbit 3248 is an example of why this can't be 0
+        dot = x_field_of_view * spacecraft_velocity_inertial_frame
+        app_flip = np.array([np.sum(dot) > 0])  # Orbit 3248 is an example of why this can't be 0  (that was previously using [:, 0] for xfov and velocity inertial frame
     except IndexError:
         app_flip = np.array([])
     return app_flip
