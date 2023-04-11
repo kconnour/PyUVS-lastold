@@ -34,10 +34,12 @@ def make_swath_number(orbit: int, hduls: generic.hdulist) -> np.ndarray:
     mirror_angle = make_mirror_angle(hduls)
     swath_number = compute_swath_number(mirror_angle)
 
-    if orbit in []:
+    if orbit in [12093]:
         swath_number += 1
     elif orbit in [3965]:
         swath_number += 4
+    elif orbit in [13134, 13229]:
+        swath_number += 5
 
     return swath_number
 
@@ -85,6 +87,7 @@ def compute_swath_number(mirror_angle: np.ndarray) -> np.ndarray:
     return swath_number
 
 
+# TODO: would it be easier to set the number of swaths between X and Y to be 6 and Yto Z to be 8?
 def make_number_of_swaths(orbit: int, hduls: generic.hdulist) -> np.ndarray:
     swath_number = make_swath_number(orbit, hduls)
     number_of_swaths = np.array([swath_number[-1] + 1]) if swath_number.size > 0 else np.array([])
@@ -94,6 +97,8 @@ def make_number_of_swaths(orbit: int, hduls: generic.hdulist) -> np.ndarray:
         number_of_swaths += 2
     elif orbit in [7430, 7802, 7876, 8530]:
         number_of_swaths += 4
+    elif orbit in [13138, 13150]:
+        number_of_swaths += 6
     return number_of_swaths
 
 

@@ -182,6 +182,6 @@ if __name__ == '__main__':
                     periapse.apsis.add_mars_sun_distance_to_file(file)
                     periapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)
 
-    for orb in range(8679, 17599):
+    for orb in range(13904, 13907):
         print(orb)
         batch_process_orbit(orb)

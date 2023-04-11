@@ -60,3 +60,7 @@ def make_orbit_code(orbit: int) -> str:
 
     """
     return 'orbit' + f'{orbit}'.zfill(5)
+
+
+def make_orbit_floor(orbit: int):
+    return math.floor(orbit / 100) * 100
