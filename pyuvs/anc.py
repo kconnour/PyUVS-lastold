@@ -15,3 +15,7 @@ def load_voltage_coefficients():
 
 def load_muv_sensitivity_curve():
     return np.load('/media/kyle/iuvs/instrument/instrument/muv_sensitivity_curve_observational.npy')
+
+
+def load_point_spread_function():
+    return np.load('/mnt/iuvs/instrument/instrument/muv_point_spread_function.npy')

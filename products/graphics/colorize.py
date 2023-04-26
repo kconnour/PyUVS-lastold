@@ -144,6 +144,30 @@ def histogram_equalize_detector_image(image: np.ndarray, mask: np.ndarray = None
     return histogram_equalize_rgb_image(coadded_image, mask=mask)
 
 
+def linear_scale_grayscale_image(image: np.ndarray, low: float, high: float) -> np.ndarray:
+    rgb = np.linspace(0, 255, num=256)
+    dn = np.linspace(low, high, num=256)
+    return np.floor(np.interp(image, dn, rgb))
+
+
+def linear_scale_rgb_image(image: np.ndarray, mask=None) -> np.ndarray:
+    img = image[mask]
+    #print(np.percentile(img[..., 0], 5), np.percentile(img[..., 0], 95))
+    #print(np.percentile(img[..., 1], 5), np.percentile(img[..., 1], 95))
+    #print(np.percentile(img[..., 2], 5), np.percentile(img[..., 2], 95))
+    #raise SystemExit(9)
+
+    red = linear_scale_grayscale_image(image[..., 0], 10, 11)
+    green = linear_scale_grayscale_image(image[..., 1], 2, 2.8)
+    blue = linear_scale_grayscale_image(image[..., 2], 1.8, 2.3)
+    return np.dstack([red, green, blue])
+
+
+def linear_scale_detector_image(image: np.ndarray, mask=None) -> np.ndarray:
+    coadded_image = turn_detector_image_to_3_channels(image)
+    return linear_scale_rgb_image(coadded_image, mask=mask)
+
+
 def square_root_scale_grayscale_image(
         image: np.ndarray, low_percentile: float = 5, high_percentile: float = 95, mask=None) -> np.ndarray:
     """Square root scale a grayscale image.
@@ -256,10 +280,15 @@ def make_image_of_mean_variations(image: np.ndarray) -> np.ndarray:
 
     """
     spectral_mean = np.nanmean(image, axis=-1)
-    # 3557 gave RuntimeWarning: invalid value encountered in divide
+    spectral_mean[spectral_mean == 0] = 1e-5     # This accounts for times when the mean = 0, but idk if I should do this here
     return np.moveaxis(np.moveaxis(image, -1, 0) / spectral_mean, 0, -1)
 
 
 def histogram_equalize_detector_image_variations(image: np.ndarray, mask=None) -> np.ndarray:
     mean_variations = make_image_of_mean_variations(image)
     return histogram_equalize_detector_image(mean_variations, mask=mask)
+
+
+def linear_scale_detector_image_variations(image: np.ndarray, mask=None) -> np.ndarray:
+    mean_variations = make_image_of_mean_variations(image)
+    return linear_scale_detector_image(mean_variations, mask=mask)

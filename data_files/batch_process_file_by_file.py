@@ -24,8 +24,9 @@ if __name__ == '__main__':
                     apoapse_hduls = get_apoapse_muv_fits_files(orbit, iuvs_fits_file_location)
 
                     # Add apsis datasets
-                    apoapse.apsis.add_ephemeris_time_to_file(file)
-                    apoapse.apsis.add_mars_year_to_file(file)
+                    #apoapse.apsis.add_ephemeris_time_to_file(file)
+                    apoapse.apsis.add_datetime_to_file(file)
+                    '''apoapse.apsis.add_mars_year_to_file(file)
                     apoapse.apsis.add_sol_to_file(file)
                     apoapse.apsis.add_solar_longitude_to_file(file)
                     apoapse.apsis.add_subsolar_latitude_to_file(file)
@@ -35,10 +36,10 @@ if __name__ == '__main__':
                     apoapse.apsis.add_subspacecraft_altitude_to_file(file)
                     apoapse.apsis.add_subspacecraft_local_time_to_file(file)
                     apoapse.apsis.add_mars_sun_distance_to_file(file)
-                    apoapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)
+                    apoapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)'''
 
                     # Add integration datasets
-                    apoapse.integration.add_ephemeris_time_to_file(file, apoapse_hduls)
+                    '''apoapse.integration.add_ephemeris_time_to_file(file, apoapse_hduls)
                     apoapse.integration.add_mirror_data_number_to_file(file, apoapse_hduls)
                     apoapse.integration.add_mirror_angle_to_file(file, apoapse_hduls)
                     apoapse.integration.add_field_of_view_to_file(file, apoapse_hduls)
@@ -133,6 +134,7 @@ if __name__ == '__main__':
                                             apoapse.muv.dayside.detector.add_raw_to_file(file, dayside_hduls)
                                             apoapse.muv.dayside.detector.add_dark_subtracted_to_file(file, dayside_hduls)
                                             apoapse.muv.dayside.detector.add_brightness_to_file(file)
+                                            apoapse.muv.dayside.detector.add_radiance_to_file(file)
 
                                         case 'nightside':
                                             nightside_hduls = get_apoapse_muv_nightside_files(orbit, iuvs_fits_file_location)
@@ -180,8 +182,8 @@ if __name__ == '__main__':
                     periapse.apsis.add_subspacecraft_altitude_to_file(file)
                     periapse.apsis.add_subspacecraft_local_time_to_file(file)
                     periapse.apsis.add_mars_sun_distance_to_file(file)
-                    periapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)
+                    periapse.apsis.add_subsolar_subspacecraft_angle_to_file(file)'''
 
-    for orb in range(13904, 13907):
+    for orb in range(3000, 3100):
         print(orb)
         batch_process_orbit(orb)

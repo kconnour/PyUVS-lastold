@@ -53,6 +53,10 @@ def furnish_spk_files():
     for kernel in kernels:
         spiceypy.furnsh(str(kernel))
 
+    temp_kernles = sorted(location.glob('trj_orb_*.bsp'))
+    for kernel in temp_kernles:
+        spiceypy.furnsh(str(kernel))
+
 
 def furnish_standard_kernels():
     spiceypy.kclear()

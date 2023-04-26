@@ -25,6 +25,22 @@ def add_ephemeris_time_to_file(file: File) -> None:
     dataset.attrs['unit'] = units.ephemeris_time
 
 
+def add_datetime_to_file(file: File) -> None:
+    orbit = file.attrs['orbit']
+    data = apoapse.apsis.make_datetime(orbit)
+
+    name = 'datetime'
+    try:
+        dataset = file[path].create_dataset(
+            name,
+            data=data,
+            compression=compression,
+            compression_opts=compression_opts)
+    except ValueError:
+        dataset = file[f'{path}/{name}']
+        dataset[...] = data
+
+
 def add_mars_year_to_file(file: File) -> None:
     orbit = file.attrs['orbit']
     data = apoapse.apsis.make_mars_year(orbit)

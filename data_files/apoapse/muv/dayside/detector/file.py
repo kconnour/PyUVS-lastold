@@ -55,3 +55,18 @@ def add_brightness_to_file(file: File) -> None:
         dataset = file[f'{path}/{name}']
         dataset[...] = data
     dataset.attrs['unit'] = units.brightness
+
+
+def add_radiance_to_file(file: File) -> None:
+    data = apoapse.muv.dayside.detector.make_radiance(file)
+
+    name = 'radiance'
+    try:
+        dataset = file[path].create_dataset(
+            name,
+            data=data,
+            compression=compression,
+            compression_opts=compression_opts)
+    except ValueError:
+        dataset = file[f'{path}/{name}']
+        dataset[...] = data

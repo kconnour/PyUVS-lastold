@@ -2,11 +2,13 @@ import multiprocessing as mp
 from pathlib import Path
 
 import cartopy.crs as ccrs
-import h5py
+from h5py import File
 import matplotlib.pyplot as plt
 import numpy as np
 
+import products.graphics as graphics
 import pyuvs as pu
+from _filename import make_filename
 
 
 def checkerboard():
@@ -75,31 +77,30 @@ def make_apoapse_muv_globe(orbit: int) -> None:
     orbit_block = pu.orbit.make_orbit_block(orbit)
     orbit_code = pu.orbit.make_orbit_code(orbit)
 
-    f = h5py.File(file_path / orbit_block / f'{orbit_code}_v01.hdf5')
+    f = File(file_path / orbit_block / f'{orbit_code}.hdf5')
 
-    brightness = f['apoapse/muv/dayside/detector/brightness'][:]
+    dayside = f['apoapse/muv/integration/dayside_integrations'][:]
+    opportunity_swaths = f['apoapse/integration/opportunity_classification'][:]
+    dayside_science_integrations = np.logical_and(dayside, ~opportunity_swaths)
 
-    if brightness.size == 0:
+    if np.sum(dayside_science_integrations) == 0:
         return
 
-    print(orbit)
-    swath_number = f['apoapse/integration/swath_number'][:]
-    tangent_altitude = f['apoapse/muv/dayside/bin_geometry/tangent_altitude'][:][..., 4]
-    solar_zenith_angle = f['apoapse/muv/dayside/bin_geometry/solar_zenith_angle'][:]
-    latitude = f['apoapse/muv/dayside/bin_geometry/latitude'][:]
-    longitude = f['apoapse/muv/dayside/bin_geometry/longitude'][:]
-    subspacecraft_latitude = f['apoapse/apsis/subspacecraft_latitude'][:][0]
-    subspacecraft_longitude = f['apoapse/apsis/subspacecraft_longitude'][:][0]
-    subspacecraft_altitude = f['apoapse/apsis/subspacecraft_altitude'][:][0]
+    brightness = f['apoapse/muv/dayside/detector/brightness'][~opportunity_swaths[dayside]]
+    swath_number = f['apoapse/integration/swath_number'][dayside]
+    tangent_altitude = f['apoapse/muv/dayside/spatial_bin_geometry/tangent_altitude'][:][..., 4]
+    solar_zenith_angle = f['apoapse/muv/dayside/spatial_bin_geometry/solar_zenith_angle'][:]
+    latitude = f['apoapse/muv/dayside/spatial_bin_geometry/latitude'][~opportunity_swaths[dayside]]
+    longitude = f['apoapse/muv/dayside/spatial_bin_geometry/longitude'][~opportunity_swaths[dayside]]
+    subspacecraft_latitude = f['apoapse/apsis/subspacecraft_latitude'][0]
+    subspacecraft_longitude = f['apoapse/apsis/subspacecraft_longitude'][0]
+    subspacecraft_altitude = f['apoapse/apsis/subspacecraft_altitude'][0]
 
     solar_zenith_angle[tangent_altitude != 0] = np.nan
 
-    if brightness.size == 0:
-        return
-
     mask = np.logical_and(tangent_altitude == 0, solar_zenith_angle <= 102)
     try:
-        rgb_image = pu.colorize.histogram_equalize_detector_image(brightness, mask=mask) / 255
+        image = graphics.histogram_equalize_detector_image(brightness, mask=mask) / 255
     except IndexError:
         return
 
@@ -120,34 +121,35 @@ def make_apoapse_muv_globe(orbit: int) -> None:
 
         x, y = latlon_meshgrid(latitude[swath_indices], longitude[swath_indices], tangent_altitude[swath_indices])
 
-        rgb = rgb_image[swath_indices]
+        rgb = image[swath_indices]
         fill = rgb[..., 0]
 
         colors = np.reshape(rgb, (rgb.shape[0] * rgb.shape[1], rgb.shape[2]))
-        globe_ax.pcolormesh(x, y, fill, color=colors, linewidth=0, edgecolors='none', rasterized=True,
-                            transform=transform).set_array(None)
+        globe_ax.pcolormesh(x, y, fill, color=colors, linewidth=0, edgecolors='none', rasterized=True, transform=transform).set_array(None)
 
     # Get info I need for the filename
     solar_longitude = f['apoapse/apsis/solar_longitude'][:][0]
     subsolar_subspacecraft_angle = f['apoapse/apsis/subsolar_subspacecraft_angle'][:][0]
-    spatial_binning = f['apoapse/muv/dayside/binning/spatial_bin_edges'][:].shape[0] - 1
-    spectral_binning = f['apoapse/muv/dayside/binning/spectral_bin_edges'][:].shape[0] - 1
+    spatial_bin_width = f['apoapse/muv/dayside/binning/spatial_bin_edges'][:].shape[0] - 1
+    spectral_bin_width = f['apoapse/muv/dayside/binning/spectral_bin_edges'][:].shape[0] - 1
 
-    filename = f'{orbit_code}-Ls{solar_longitude * 10:04.0f}-angle{subsolar_subspacecraft_angle * 10:04.0f}-binning{spatial_binning:04}x{spectral_binning:04}-heq-globe.png'
-
-    plt.savefig(save_location / filename)
+    filename = make_filename(orbit_code, solar_longitude, subsolar_subspacecraft_angle, spatial_bin_width, spectral_bin_width, 'heq', 'globe')
+    save = save_location / pu.make_orbit_block(orbit) / filename
+    save.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(save_location / save)
     plt.close(fig)
 
 
 if __name__ == '__main__':
     file_path = Path('/media/kyle/iuvs/data/')
-    save_location = Path('/home/kyle/iuvs/cloudspotting/')
+    save_location = Path('/media/kyle/iuvs/cloudspotting/globes-heq')
 
     n_cpus = mp.cpu_count()
     pool = mp.Pool(n_cpus -1)
 
-    for orb in range(3000, 3100):
+    for orb in range(17907, 18196):
         pool.apply_async(func=make_apoapse_muv_globe, args=(orb,))
+        #make_apoapse_muv_globe(3000)
 
     pool.close()
     pool.join()

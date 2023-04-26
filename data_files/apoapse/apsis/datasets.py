@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import h5py
 import mars_time as mt
 import numpy as np
 import spiceypy
@@ -9,11 +10,18 @@ import pyuvs as pu
 
 
 generic.spice.furnish_standard_kernels()
-orbits, ephemeris_times = generic.spice.compute_maven_apsis_et('apoapse', end_time=datetime(2022, 12, 31))
+orbits, ephemeris_times = generic.spice.compute_maven_apsis_et('apoapse', end_time=datetime(2023, 2, 13))
 
 
 def make_ephemeris_time(orbit) -> np.ndarray:
     return ephemeris_times[orbits == orbit]
+
+
+def make_datetime(orbit) -> np.ndarray:
+    ephemeris_time = make_ephemeris_time(orbit)
+    utc = spiceypy.et2datetime(ephemeris_time)[0]
+    utc = np.array([np.datetime64(utc)])
+    return utc.astype(h5py.opaque_dtype(utc.dtype))
 
 
 def make_mars_year(orbit: int) -> np.ndarray:

@@ -195,7 +195,7 @@ if __name__ == '__main__':
     n_cpus = mp.cpu_count()
     pool = mp.Pool(n_cpus - 5)
 
-    for orb in range(10000, 15000):
+    for orb in range(15000, 15500):
         #print(orb)
         #make_histogram_equalized_detector_image(orb)
         #make_square_root_scaled_detector_image(orb)
