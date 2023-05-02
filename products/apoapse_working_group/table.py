@@ -3,7 +3,7 @@ import pandas as pd
 from h5py import File
 import pyuvs as pu
 
-start_orbit = 10000
+start_orbit = 3000
 end_orbit = 17000
 
 n_orbits = end_orbit - start_orbit
@@ -18,7 +18,9 @@ int_time = np.empty((n_orbits,))
 mcp_volt = np.empty((n_orbits,))
 mcp_gain = np.empty((n_orbits,))
 temperature_mean = np.empty((n_orbits,))
-temperature_range = np.empty((n_orbits,))
+#temperature_range = np.empty((n_orbits,))
+temperature_min = np.empty((n_orbits,))
+temperature_max = np.empty((n_orbits,))
 
 
 for c, orbit in enumerate(range(start_orbit, end_orbit)):
@@ -63,11 +65,23 @@ for c, orbit in enumerate(range(start_orbit, end_orbit)):
     except:
         temperature_mean[c] = np.nan
 
-    try:
+    '''try:
         t = file['apoapse/muv/integration/detector_temperature'][:]
         temperature_range[c] = np.ptp(t)
     except:
-        temperature_range[c] = np.nan
+        temperature_range[c] = np.nan'''
+
+    try:
+        t = file['apoapse/muv/integration/detector_temperature'][:]
+        temperature_min[c] = np.nanmin(t)
+    except:
+        temperature_min[c] = np.nan
+
+    try:
+        t = file['apoapse/muv/integration/detector_temperature'][:]
+        temperature_max[c] = np.nanmax(t)
+    except:
+        temperature_max[c] = np.nan
 
 
 data = {'Orbit': orbits,
@@ -77,8 +91,10 @@ data = {'Orbit': orbits,
         'Integration time': int_time,
         'MCP voltage': mcp_volt,
         'MCP gain': mcp_gain,
-        'Temperature mean': temperature_mean,
-        'Temperature range': temperature_range
+        'MUV detector temperature mean': temperature_mean,
+        #'Temperature range': temperature_range
+        'MUV detector temperature max': temperature_max,
+        'MUV detector temperature min': temperature_min
         }
 
 

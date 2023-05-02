@@ -3,7 +3,8 @@ from datetime import datetime
 from pathlib import Path
 import warnings
 
-from astropy.time import Time
+from astropy.time import Time, TimeDelta
+from astropy import units as u
 from h5py import File
 import numpy as np
 from netCDF4 import Dataset
@@ -40,7 +41,7 @@ def make_brightness(file: File) -> np.ndarray:
 
 def make_radiance(file: File) -> np.ndarray:
     dds = file['apoapse/muv/dayside/detector/dark_subtracted'][:]
-    dt = file['apoapse/apsis/datetime'][:]
+    et = file['apoapse/apsis/ephemeris_time'][:]
     mars_sun_distance = file['apoapse/apsis/mars_sun_distance'][:]
     spectral_bin_edges = file['apoapse/muv/dayside/binning/spectral_bin_edges'][:]
 
@@ -48,12 +49,13 @@ def make_radiance(file: File) -> np.ndarray:
     wavelength_edges = None
 
     psf = pu.load_point_spread_function()
-    foo = datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S.%f')
 
-    if foo < datetime(2020, 2, 1):
-        solar_flux = Solstice(foo)
+    timestamp = (Time(2000, format='jyear') + TimeDelta(et * u.s)).iso
+    dt = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
+    if dt < datetime(2020, 2, 1):
+        solar_flux = Solstice(dt)
     else:
-        solar_flux = TSIS1(dt)
+        solar_flux = TSIS1(timestamp)
 
     earth_sun_distance = 1.496e8  # km
     radius = earth_sun_distance / mars_sun_distance
@@ -143,6 +145,8 @@ class TSIS1(SolarFlux):
         return self.dataset['wavelength'][:]
 
     def get_irradiance(self):
+        # NOTE: In theory I should adjust this spectrum to match what SOLSTICE would've measured. However, over the
+        # spectral range I care about, the differences are so small that it's not worth the effort right now
         jd = Time(self.dt, format='isot').jd
         times = self.dataset['time'][:]
         idx = np.np.abs(times - jd).argmin()

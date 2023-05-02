@@ -60,6 +60,6 @@ if __name__ == '__main__':
     file_path = Path('/media/kyle/iuvs/data/')
     save_location = Path('/media/kyle/iuvs/apoapse-working-group/along_slit_colors')
 
-    for orb in range(3400, 3500):
+    for orb in range(11200, 11300):
         print(orb)
         plot_along_slit_reddening(orb)

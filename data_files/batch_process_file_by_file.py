@@ -25,7 +25,6 @@ if __name__ == '__main__':
 
                     # Add apsis datasets
                     #apoapse.apsis.add_ephemeris_time_to_file(file)
-                    apoapse.apsis.add_datetime_to_file(file)
                     '''apoapse.apsis.add_mars_year_to_file(file)
                     apoapse.apsis.add_sol_to_file(file)
                     apoapse.apsis.add_solar_longitude_to_file(file)
